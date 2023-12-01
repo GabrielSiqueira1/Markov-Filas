@@ -1,55 +1,59 @@
 import numpy as np
+import random
 
-def simulate_markov_chain(transition_matrix, initial_state, max_transitions):
-    current_state = initial_state
-    transitions = 0
+def simular_cadeia_markov(P, estado_inicial, numero_transicoes):
+    estado_atual = estado_inicial
+    t = 0
 
-    while transitions < max_transitions:
-        # Gere uma transição para o próximo estado com base na matriz de transição
-        next_state = np.random.choice(len(transition_matrix), p=transition_matrix[current_state])
-
-        # Se atingir um estado absorvente (0 ou 4), retorne esse estado
-        if next_state == 0 or next_state == 4:
-            return next_state
-
-        current_state = next_state
-        transitions += 1
-
-    # Se não atingir um estado absorvente em max_transitions, retorne -1
-    return -1
-
-def estimate_absorption_probabilities(transition_matrix, initial_state, max_transitions, num_simulations):
-    absorption_counts = {0: 0, 4: 0}
-
-    for _ in range(num_simulations):
-        final_state = simulate_markov_chain(transition_matrix, initial_state, max_transitions)
+    while t < numero_transicoes:
+        chute = random.uniform(0,1)
         
-        # Atualize as contagens com base no estado absorvente atingido
-        if final_state != -1:
-            absorption_counts[final_state] += 1
+        # Roleta
+        probabilidades=P[estado_atual]
+        somatorio=probabilidades[0]
+        
+        i = 1
+        while i < len(P):
+            if chute > somatorio:
+                somatorio += probabilidades[i] 
+                if chute < somatorio:
+                    estado_atual = i
+                    i = len(P)
+            else:
+                estado_atual = i-1
+                i = len(P)
+                
+            i += 1
+        t += 1
+    return estado_atual
 
-    # Calcule as probabilidades estimadas
-    absorption_probabilities = {state: count / num_simulations for state, count in absorption_counts.items()}
-    return absorption_probabilities
+def estimar(P, estado_inicial, numero_transicoes, numero_simulacoes):
+    dicio_estados_quantidade = {chave: 0 for chave in range(5)}
+
+    for _ in range(numero_simulacoes):
+        estado_final = simular_cadeia_markov(P, estado_inicial, numero_transicoes)
+        
+        dicio_estados_quantidade[estado_final] += 1
+        
+    probabilidades = {estado: contador/numero_simulacoes for estado, contador in dicio_estados_quantidade.items()}
+    return probabilidades
 
 if __name__ == "__main__":
-    # Defina a matriz de transição e outros parâmetros
-    transition_matrix = np.array([
+    P = np.array([
         [1, 0, 0, 0, 0],
         [2/3, 0, 1/3, 0, 0],
         [0, 2/3, 0, 1/3, 0],
         [0, 0, 2/3, 0, 1/3],
         [0, 0, 0, 0, 1]
     ])
-    initial_state = 1  # Alteração para iniciar no estado 1
-    max_transitions = 100
-    num_simulations = 1000
-
-    # Estime as probabilidades de absorção
-    absorption_probabilities = estimate_absorption_probabilities(
-        transition_matrix, initial_state, max_transitions, num_simulations
-    )
-
-    # Imprima os resultados
-    print("Probabilidade estimada de absorção no estado 0:", absorption_probabilities[0])
-    print("Probabilidade estimada de absorção no estado 4:", absorption_probabilities[4])
+    
+    # Parâmetros da questão
+    estado_inicial = 1
+    numero_simulacoes = 1000
+    numero_transicoes = 100
+    
+    probabilidades = estimar(P, estado_inicial, numero_transicoes, numero_simulacoes)
+    
+    # Conforme o exercício, estime as probabilidades dos estados de absorção
+    print("Probabilidade do estado absorvente 0:", probabilidades[0])
+    print("Probabilidade do estado absorvente 4:", probabilidades[4])
