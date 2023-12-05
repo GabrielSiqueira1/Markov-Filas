@@ -2,24 +2,25 @@ import numpy as np
 import random
 
 def simular_cadeia_markov(P, estado_inicial, numero_transicoes):
-    estado_atual = estado_inicial
+    estado_atual = estado_inicial 
     t = 0
 
     while t < numero_transicoes:
         chute = random.uniform(0,1)
         
         # Roleta
+        # O procedimento de roletagem se baseia nas probabilidades da matriz e o quanto um chute é maior que o valor daquela probabilidade. Além disso, por ser representado por um gráfico de setor, as porcentagens da roleta são somadas, ou seja, se para o estado 1 temos 20% e para o estado 2 20%, na roleta só alcançaremos o estado 2 se ficarmos entre 20% e 40%, dessa forma, se o chute for em 35%, o estado irá para 2.
         probabilidades=P[estado_atual]
         somatorio=probabilidades[0]
         
         i = 1
         while i < len(P):
-            if chute > somatorio:
+            if chute > somatorio: # se o chute não estiver na região do setor
                 somatorio += probabilidades[i] 
-                if chute < somatorio:
+                if chute < somatorio: # se estiver na região do setor
                     estado_atual = i
-                    i = len(P)
-            else:
+                    i = len(P) # break no looping
+            else: # caso o chute inicial já esteja dentro do setor
                 estado_atual = i-1
                 i = len(P)
                 
@@ -28,14 +29,14 @@ def simular_cadeia_markov(P, estado_inicial, numero_transicoes):
     return estado_atual
 
 def estimar(P, estado_inicial, numero_transicoes, numero_simulacoes):
-    dicio_estados_quantidade = {chave: 0 for chave in range(5)}
+    dicio_estados_quantidade = {chave: 0 for chave in range(5)} # Cria um dicionário com os 5 estados possíveis
 
     for _ in range(numero_simulacoes):
         estado_final = simular_cadeia_markov(P, estado_inicial, numero_transicoes)
         
         dicio_estados_quantidade[estado_final] += 1
         
-    probabilidades = {estado: contador/numero_simulacoes for estado, contador in dicio_estados_quantidade.items()}
+    probabilidades = {estado: contador/numero_simulacoes for estado, contador in dicio_estados_quantidade.items()} # Verificação quantitativa da porcentagem de estados finais com relação ao número de simulações 
     return probabilidades
 
 if __name__ == "__main__":

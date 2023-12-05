@@ -19,7 +19,7 @@ def simular(lambd, mi, s, T):
             atendentes_ocupados.append(cliente) 
             
         # Ainda no segundo ponto, para cada atendente ocupado, se um valor aleatório entre 0 e 1 for menor que mi, então, considera-se atendido
-        # O reversed é uma propriedade útil para listas que estão sendo alteradas dentro de um loop onde o loop depende dos seus funcionamento.
+        # O reversed é uma propriedade útil para listas que estão sendo alteradas dentro de um loop onde o loop depende dos seu tamanho. Sem o reversed, a próxima posição que poderia sofrer pop não existiria
         for i in reversed(range(len(atendentes_ocupados))):
             if random.uniform(0, 1) < mi and atendentes_ocupados[i]:
                 atendentes_ocupados.pop(i)
@@ -41,11 +41,12 @@ def exibir_resultados(clientes_aguardando, clientes_totais, save_path):
     plt.legend()
     plt.grid(True)
     plt.savefig(save_path)
+    print(f"Arquivo {save_path} gerado no diretório da questão")
         
 # Função genérica para os diferentes sistemas propostos
 def instancia(lambd, mi, s, T, i):
     clientes_aguardando, clientes_totais = simular(lambd, mi, s, T) 
-    exibir_resultados(clientes_aguardando, clientes_totais, save_path=f'simulacao_ponto_{s}_iteracao_{i}.png')
+    exibir_resultados(clientes_aguardando, clientes_totais, save_path=f'simulacao_ponto_{s}_vez_{i}.png')
 
 if __name__ == "__main__":
     

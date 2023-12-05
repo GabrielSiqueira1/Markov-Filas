@@ -30,12 +30,26 @@ def simular(lambd, mi, s, T):
     return clientes_aguardando, clientes_totais
 
 def exibir_resultados(clientes_aguardando, clientes_totais):
-    print("{:<15} {:<20} {:<20}".format("Iteração", "Clientes aguardando", "Total de clientes"))
-    for i, (espera, total) in enumerate(zip(clientes_aguardando, clientes_totais)):
-        print("{:<15} {:<20} {:<20}".format(i + 1, espera, total))
+    
+    # Cabeçalho
+    cblho = ["Iteração", "Clientes aguardando", "Total de clientes"]
+
+    # Tracejado entre as palavras do cabeçalho
+    divisor = "|".join(cblho)
+    print(divisor)
+    
+    # Imprimindo a divisoria
+    divisoria = "--------------------" * len(cblho)
+    print(divisoria) 
+    
+    linha = ""
+    for i in range(len(clientes_aguardando)):
+        linha += f"    {i+1}   |         {clientes_aguardando[i]}         |             {clientes_totais[i]}   \n"
+            
+    print(linha)
 
 if __name__ == "__main__":
-    # Utilizando um exmplo da letra b
+    # Utilizando um exemplo da letra b
     lambd = 0.3 # taxa de chegada
     mi = 0.25 # taxa de atendimento
     s = 2 # número de atendentes
