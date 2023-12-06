@@ -14,33 +14,27 @@ import random
 import numpy as np
 from scipy.optimize import linprog
 
-def rodar_estrategias_mistas(payoff_matrix):
-   num_players, num_strategies = matriz_premios.shape
+def rodar_estrategias_mistas(matriz_premios_jogo):
+    num_estrategias = matriz_premios_jogo.shape[0]
 
-    # Definição da função objetivo p/maximizar o valor do jogo
-   c = np.ones(num_strategies )
+    # Coeficientes da função objetivo (maximizar)
+    c = -1 * np.ones(num_estrategias)
 
-    # Restrições de prob. para cada estratégia
-   A_eq = np.ones((1, num_strategies ))
-   b_eq = np.array([1.0])
+    # Restrições de probabilidade
+    A_eq = np.ones((1, num_estrategias))
+    b_eq = np.array([1.0])
 
-    # Restrições para n negativar as probs.
-   bounds = [(0, 1) for _ in range(num_strategies )]
+    # Limites para as probabilidades (entre 0 e 1)
+    bounds = [(0, 1) for _ in range(num_estrategias)]
 
-   probabilidades = []
-   valores_jogos = []
+    # Resolvendo o problema de programação linear
+    result = linprog(c, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method='highs')
 
-   for jogador in range(num_players):
+    # Obtendo as probabilidades ótimas e calculando os valores dos jogos
+    probabilidades = result.x
+    valores_jogos = np.dot(probabilidades, matriz_premios_jogo)
 
-       # Resolução da programação linear
-       resultado = linprog(c, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method='highs')
-
-       #Salvando as probs e o valor do jogo para o jogador atual
-       probabilidades.append(resultado.x)
-       valores_jogos.append(-resultado.fun)
-
-   # Retornar as probs de cada estratégia para cada jogador
-   return probabilidades, valores_jogos
+    return probabilidades, valores_jogos
 
 
 def jogoParOuImpar(matriz_premios, opcao_nao_otima=False):
@@ -72,7 +66,7 @@ def jogoParOuImpar(matriz_premios, opcao_nao_otima=False):
             norma_euclidiana = 0  # Não usada nesta simulação
 
       # Acumulação do prêmio do jogador 1
-      total_premios += valores_jogos[0]
+      total_premios += valores_jogos
 
    return total_premios, norma_euclidiana
 
@@ -129,8 +123,9 @@ if __name__ == "__main__":
    print(f"Solução Ligeiramente Diferente c/Total de prêmios acumulado em 100 jogos: {total_premios_distinta}")
    print(f"Norma Euclidiana entre as soluções: {norma_euclidiana}")
 
+   diferenca_premios = total_premios_otimo - total_premios_distinta
    #(iv) Comparação numerica dos somatórios dos prêmios das duas simulações
-   print("Diferença nos somatórios de prêmios das duas simulações", diferenca_premios = total_premios_otimo - total_premios_distinta)
+   print(f"Diferença nos somatórios de prêmios das duas simulações : {diferenca_premios}")
 
 
 
