@@ -1,3 +1,15 @@
+# Questao2 - Trabalho de OTM2
+#
+# FELIPE MARTINS LEMOS DE MORAIS - 20193001045
+# GABRIEL SIQUEIRA SILVA -20203008814
+# FERNANDO GARAMVÖLGYI MAFRA VEIZAGA - 20203001902
+#
+# Descrição do codigo: 
+# O código simula uma cadeia de Markov com matriz de transição 'P'. A função simular_cadeia_markov realiza uma única simulação, 
+# usando um procedimento de roleta para transições de estado com base em probabilidades. A função estimar realiza múltiplas 
+# simulações e estima as probabilidades dos estados absorventes (0 e 4) após um número fixo de transições. O resultado é exibido,
+# mostrando as probabilidades estimadas dos estados de absorção para a cadeia de Markov fornecida.
+
 import numpy as np
 import random
 

@@ -1,3 +1,16 @@
+# Questao 3b - Trabalho de OTM2
+#
+# FELIPE MARTINS LEMOS DE MORAIS - 20193001045
+# GABRIEL SIQUEIRA SILVA -20203008814
+# FERNANDO GARAMVÖLGYI MAFRA VEIZAGA - 20203001902
+#
+# Descrição do codigo: 
+# O código realiza simulações de sistemas de filas com diferentes configurações, representando atendimentos em um ambiente de serviços.
+# A função simular modela a chegada e atendimento de clientes ao longo do tempo. A função exibir_resultados gera gráficos representando 
+# o número de clientes aguardando e o total de clientes em cada iteração, salvando as imagens no diretório especificado. 
+# O código então executa 300 simulações (100 para cada configuração de atendentes) e salva os resultados em arquivos de imagem para análise 
+# visual. Os parâmetros incluem taxa de chegada (lambd), taxa de atendimento (mi), número de atendentes (s), e tempo de simulação (T).
+
 import random
 import matplotlib.pyplot as plt
 

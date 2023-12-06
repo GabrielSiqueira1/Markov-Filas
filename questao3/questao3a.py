@@ -1,3 +1,16 @@
+# Questao3a - Trabalho de OTM2
+#
+# FELIPE MARTINS LEMOS DE MORAIS - 20193001045
+# GABRIEL SIQUEIRA SILVA -20203008814
+# FERNANDO GARAMVÖLGYI MAFRA VEIZAGA - 20203001902
+#
+# Descrição do codigo: 
+# O código simula um sistema de filas com chegada e atendimento de clientes. Utilizando parâmetros como taxa de chegada (lambd),
+# taxa de atendimento (mi), número de atendentes (s), e tempo de simulação (T), ele simula a evolução do sistema ao longo do tempo.
+# A função simular modela a chegada de clientes, a ocupação de atendentes e o atendimento dos clientes. Os resultados 
+# são armazenados em vetores. A função exibir_resultados imprime uma tabela com o número de clientes aguardando e o total de 
+# clientes em cada iteração. O exemplo mostra a simulação para um caso específico e exibe os resultados em uma tabela.
+
 import random
 
 def simular(lambd, mi, s, T):

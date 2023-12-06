@@ -1,3 +1,16 @@
+# Questao4 - Trabalho de OTM2
+#
+# FELIPE MARTINS LEMOS DE MORAIS - 20193001045
+# GABRIEL SIQUEIRA SILVA -20203008814
+# FERNANDO GARAMVÖLGYI MAFRA VEIZAGA - 20203001902
+#
+# Descrição do codigo: 
+# O código implementa funções para analisar sistemas de filas usando os modelos MM1 e MMS. O modelo MM1 é para uma única fila, 
+# enquanto o modelo MMS é para várias filas. A função tabela gera uma tabela com várias métricas para diferentes configurações 
+# de servidores (s). Os parâmetros incluem taxa de chegada (lambd) e taxa de atendimento (mi). As métricas incluem probabilidades,
+# números esperados de clientes na fila e no sistema, tempos de espera, e probabilidades de tempo de espera na fila ser maior que 
+# zero, um, dois e cinco. O resultado é impresso em uma tabela formatada.
+
 import numpy as np
 import math
 
