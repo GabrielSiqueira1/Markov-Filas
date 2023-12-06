@@ -28,7 +28,7 @@ def rodar_estrategias_mistas(matriz_premios_jogo):
     bounds = [(0, 1) for _ in range(num_estrategias)]
 
     # Resolvendo o problema de programação linear
-    result = linprog(c, A_eq=A_eq, b_eq=b_eq, bounds=bounds, method='highs')
+    result = linprog(c, A_eq=A_eq, b_eq=b_eq, bounds=bounds)
 
     # Obtendo as probabilidades ótimas e calculando os valores dos jogos
     probabilidades = result.x
@@ -91,7 +91,7 @@ if __name__ == "__main__":
    
    # Resposta a)
    prob, val = rodar_estrategias_mistas(matriz_premios)
-   print(f"As probabilidades são:{prob}, e os valores do jogo são {val}")
+   print(f" Resolução do exercicio 1:\nApós receber a seguinte matriz que representa a tabela de prêmios {matriz_premios} \n As probabilidades são:{prob}, e os valores do jogo são {val}")
    
    # Resposta b)
    matriz_parOuimpar = np.array([
@@ -100,7 +100,7 @@ if __name__ == "__main__":
    ])
 
    total_premios, _ = jogoParOuImpar(matriz_parOuimpar)
-   print(f"Total prêmios do jogo de par ou ímpar: {total_premios}")
+   print(f"\nJogo do Par ou Impar:\n Após 100 vezes, solução convencional, total de prêmios do jogo de par ou ímpar: {total_premios}")
 
    #Resposta c)
    #(i) Solução com a tabela de prêmios fornecida
@@ -115,13 +115,12 @@ if __name__ == "__main__":
    total_premios_otimo = jogoParOuImpar(tabela_premios_fornecida)
 
    #(iii) Simulando o jogo em 100 rodadas com uma solução ligeiramente diferente
-   total_premios_distinta, norma_euclidiana = jogoParOuImpar(matriz_premios, True)
-   print("isso aqui  ",total_premios_distinta)
+   total_premios_distinta, norma_euclidiana = jogoParOuImpar(tabela_premios_fornecida, True)
 
    #Resultados
-   print(f"Solução Ótima c/Total de prêmios acumulado em 100 jogos: {total_premios_otimo}")
-   print(f"Solução Ligeiramente Diferente c/Total de prêmios acumulado em 100 jogos: {total_premios_distinta}")
-   print(f"Norma Euclidiana entre as soluções: {norma_euclidiana}")
+   print(f"\nSolução Ótima c/Total de prêmios acumulado em 100 jogos: {total_premios_otimo}\n")
+   print(f"Solução Ligeiramente Diferente c/Total de prêmios acumulado em 100 jogos: {total_premios_distinta}\n")
+   print(f"Norma Euclidiana entre as soluções: {norma_euclidiana}\n")
 
    diferenca_premios = total_premios_otimo - total_premios_distinta
    #(iv) Comparação numerica dos somatórios dos prêmios das duas simulações
