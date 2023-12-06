@@ -1,2 +1,2 @@
 run:
-	python3 questao2.py
+	python questao2.py
